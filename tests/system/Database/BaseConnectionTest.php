@@ -81,6 +81,7 @@ class BaseConnectionTest extends \CIUnitTestCase
 
 		$db->shouldReturn('connect', false)
 			->initialize();
+		$db->close();
 	}
 
 	//--------------------------------------------------------------------
@@ -93,6 +94,8 @@ class BaseConnectionTest extends \CIUnitTestCase
 			->initialize();
 
 		$this->assertSame(123, $db->getConnection());
+		$db->persistentConnect();
+		$db->close();
 	}
 
 	//--------------------------------------------------------------------
@@ -113,6 +116,7 @@ class BaseConnectionTest extends \CIUnitTestCase
 
 		$this->assertSame(345, $db->getConnection());
 		$this->assertSame('failover', $db->username);
+		$db->close();
 	}
 
 	//--------------------------------------------------------------------
@@ -127,9 +131,20 @@ class BaseConnectionTest extends \CIUnitTestCase
 
 		$this->assertTrue($db->getConnectStart() > $start);
 		$this->assertTrue($db->getConnectDuration() > 0.0);
+		$db->close();
 	}
 
 	//--------------------------------------------------------------------
 
+	public function testGetDatabase()
+	{
+		$db = new MockConnection($this->options);
+		$this->assertSame('dbname', $db->getDatabase());
+	}
 
+	public function testGetPlatform()
+	{
+		$db = new MockConnection($this->options);
+		$this->assertSame('MockDriver', $db->getPlatform());
+	}
 }

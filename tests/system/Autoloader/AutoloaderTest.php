@@ -108,6 +108,20 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	//--------------------------------------------------------------------
 
+	/**
+	 * @expectedException        \InvalidArgumentException
+	 * @expectedExceptionMessage Config array must contain either the 'psr4' key or the 'classmap' key.
+	 */
+	public function testInitializeException()
+	{
+		$config = new Autoload();
+		$config->classmap = [];
+		$config->psr4 = [];
+
+		$this->loader = new MockAutoloader();
+		$this->loader->initialize($config);
+	}
+
 	public function testAddNamespaceWorks()
 	{
 		$this->assertFalse($this->loader->loadClass('My\App\Class'));
@@ -153,9 +167,9 @@ class AutoloaderTest extends \CIUnitTestCase
 
 	public function testLoadLegacy()
 	{
-	    $this->assertFalse((bool)$this->loader->loadClass('someLibraries'));
-	    $this->assertTrue((bool)$this->loader->loadClass('someLibrary'));
-	    $this->assertTrue((bool)$this->loader->loadClass('someModel'));
+		$this->assertFalse((bool)$this->loader->loadClass('someLibraries'));
+		$this->assertTrue((bool)$this->loader->loadClass('someLibrary'));
+		$this->assertTrue((bool)$this->loader->loadClass('someModel'));
 	}
 
 	//--------------------------------------------------------------------
