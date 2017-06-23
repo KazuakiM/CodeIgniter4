@@ -68,18 +68,6 @@ class Files extends BaseCollector
 	//--------------------------------------------------------------------
 
 	/**
-	 * Returns any information that should be shown next to the title.
-	 *
-	 * @return string
-	 */
-	public function getTitleDetails(): string
-	{
-		return '( '.(int)count(get_included_files()).' )';
-	}
-
-	//--------------------------------------------------------------------
-
-	/**
 	 * Builds and returns the HTML needed to fill a tab to display
 	 * within the Debug Bar
 	 *
@@ -117,10 +105,22 @@ class Files extends BaseCollector
 		sort($coreFiles);
 
 		return $parser->setData([
-				'coreFiles' => $coreFiles,
-				'userFiles' => $userFiles,
+			'coreFiles' => $coreFiles,
+			'userFiles' => $userFiles,
 		])
-			->render('_files.tpl');
+		->render('_files.tpl');
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Returns any information that should be shown next to the title.
+	 *
+	 * @return string
+	 */
+	public function getTitleDetails(): string
+	{
+		return '( '.(int)count(get_included_files()).' )';
 	}
 
 	//--------------------------------------------------------------------

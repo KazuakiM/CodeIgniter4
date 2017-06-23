@@ -154,9 +154,9 @@ class BaseCollector
 	 * Does this Collector have data that should be shown in the
 	 * 'Vars' tab?
 	 *
-	 * @return mixed
+	 * @return bool
 	 */
-	public function hasVarData()
+	public function hasVarData(): bool
 	{
 	    return (bool)$this->hasVarData;
 	}
